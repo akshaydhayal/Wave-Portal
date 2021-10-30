@@ -9,15 +9,14 @@ const main = async () => {
   console.log("Contract deployed to:", waveContract.address);
   console.log("Contract deployed by:",owner.address);
 
-  let waveCount,last;
-  waveCount,last=await waveContract.getTotalWaves();
+  let waveCount=await waveContract.getTotalWaves();
 
   let waveTxn = await waveContract.wave();
   await waveTxn.wait();
   waveTxn = await waveContract.connect(randomPerson).wave();
   await waveTxn.wait();
 
-  waveCount,last = await waveContract.getTotalWaves();
+  waveCount = await waveContract.getTotalWaves();
   
 };
 
