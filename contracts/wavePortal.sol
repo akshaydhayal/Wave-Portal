@@ -14,7 +14,7 @@ contract WavePortal{
   }
   Wave [] waves;
 
-  constructor(){
+  constructor() payable{
     console.log("This is a smart Contract");
   }
 
@@ -25,6 +25,14 @@ contract WavePortal{
 
     emit NewWave(msg.sender, block.timestamp, _message);
     //lastAdd=msg.sender;
+
+    uint256 prizeAmount = 0.0001 ether;
+    require(
+        prizeAmount <= address(this).balance,
+        "Trying to withdraw more money than the contract has."
+    );
+    (bool success, ) = (msg.sender).call{value: prizeAmount}("");
+    require(success, "Failed to withdraw money from contract.");
   }
   //I added a function getAllWaves which will return the struct array, waves, to us.This will make it easy to retrieve the waves from our website!
   function getAllWaves() public view returns(Wave [] memory){
@@ -49,3 +57,5 @@ contract WavePortal{
 //New(1.1) WavePortal Contract address:  0x68aC3851e3F39B0D115A20A61cD23016164436Ab
 
 //New(1.2) WavePortal Contract address: 0x851EE537280e7F3B94Ebe487fbe6423a7589b941
+
+//New(1.3) Contract(adding Fund contract, set a prize):0x7100819f3bd29f2Cde7CE9c28913E226a2D5827A
